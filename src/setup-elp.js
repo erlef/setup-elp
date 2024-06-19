@@ -8,7 +8,7 @@ async function main() {
   prepareLocal()
   const elpVersion = getRequiredInput('elp-version')
   assertArchsPlatforms()
-  installElp(elpVersion)
+  await installElp(elpVersion)
 }
 
 main().catch((error) => {
@@ -119,7 +119,9 @@ async function otpMajorMinor() {
     `,
     '-noshell',
   ]
-  const otpMajorMinor = exec_(cmd, args)
+  let otpMajorMinor = await exec_(cmd, args)
+  const [major, minor] = otpMajorMinor.split('.').slice(0, 2)
+  otpMajorMinor = `${major}.${minor}`
   core.debug(`Erlang/OTP <major>.<minor> is '${otpMajorMinor}'`)
   return otpMajorMinor
 }
