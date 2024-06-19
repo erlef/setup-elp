@@ -6,7 +6,7 @@ prepareForOutput()
 
 function tests() {
   const assert = require('assert')
-  require('../src/gha-example')
+  require('../src/setup-elp')
 
   const outputs = fs.readFileSync(outputsF, 'utf8')
   const output1 = outputs

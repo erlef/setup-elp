@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright (c) 2024 Paulo F. Oliveira
+Copyright (c) 2024 Erlang Ecosystem Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
