@@ -20,11 +20,20 @@ in the Erlang Language Platform repository mentioned above.
 
 The action supports the following inputs:
 
-TBD.
+| `with`        | Purpose
+|-              |-
+| `elp-version` | Choose the ELP version to use
 
-#### Architectures
+#### Architectures / platforms
 
-TBD.
+The action supports the following architectures / platforms:
+
+| arch.   | platform
+|-        |-
+| `arm64` | `darwin` (GitHub `macos-...`)
+| `amd64` | `darwin`
+| `arm64` | `linux` (GitHub `ubuntu-...`)
+| `amd64` | `linux`
 
 ## The project
 
