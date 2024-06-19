@@ -26,11 +26,8 @@ async function installElp(elpVersion) {
     const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
     core.debug(`ELP download URL is '${elpTarGz}'`)
     const file = await toolCache.downloadTool(elpTarGz)
-    const dest = undefined
-    const flags = ['zxf']
-    const targetDir = await toolCache.extractTar(file, dest, flags)
-    const target = 'elp'
-    cachePath = await toolCache.cacheFile(file, target, toolName, elpVersion)
+    const targetDir = await toolCache.extractTar(file)
+    cachePath = await toolCache.cacheDir(targetDir, toolName, elpVersion)
   } else {
     core.debug(`ELP ${elpVersion} is cached as a tool`)
   }
