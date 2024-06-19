@@ -22,7 +22,8 @@ async function installElp(elpVersion) {
   if (cachePath === '') {
     core.debug(`ELP ${elpVersion} is not cached as a tool`)
     const elpTarGzFile0 = await elpTarGzFile()
-    const elpTarGz = `https://github.com/WhatsApp/erlang-language-platform/releases/download/${elpVersion}/${elpTarGzFile0}`
+    const repo = 'https://github.com/WhatsApp/erlang-language-platform'
+    const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
     core.debug(`ELP download URL is '${elpTarGz}'`)
     const file = await toolCache.downloadTool(elpTarGz)
     const targetDir = await toolCache.extractTar(file)
@@ -44,18 +45,13 @@ async function installElp(elpVersion) {
 }
 
 function assertArchsPlatforms() {
-  const knownArchsPlatforms = [
-    'arm64:darwin',
-    'x64:darwin',
-    'arm64:linux',
-    'x64:linux',
-  ]
+  const knownArchsPlatforms = ['arm64:darwin', 'x64:darwin', 'arm64:linux', 'x64:linux']
   const archPlatform = `${arch()}:${platform()}`
 
   if (!knownArchsPlatforms.includes(archPlatform)) {
+    const knownPlatformsPr = knownArchsPlatforms.join("', '")
     throw new Error(
-      `Unknown <arch>:<platform> '${archPlatform}'.
-      Must be one of ['${knownArchsPlatforms.join("', '")}']`,
+      `Unknown <arch>:<platform> '${archPlatform}'. Must be one of ['${knownPlatformsPr}']`,
     )
   }
   core.debug(`<arch>:<platform> is '${archPlatform}'`)
