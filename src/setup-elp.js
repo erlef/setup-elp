@@ -20,29 +20,27 @@ async function installElp(elpVersion) {
   let cachePath = toolCache.find(toolName, elpVersion)
 
   if (cachePath === '') {
-    core.debug(`ELP ${elpVersion} is not cached`)
+    core.debug(`ELP ${elpVersion} is not cached as a tool`)
     const elpTarGzFile0 = await elpTarGzFile()
     const elpTarGz = `https://github.com/WhatsApp/erlang-language-platform/releases/download/${elpVersion}/${elpTarGzFile0}`
-    core.debug(`ELP download URL is ${elpTarGz}`)
+    core.debug(`ELP download URL is '${elpTarGz}'`)
     const file = await toolCache.downloadTool(elpTarGz)
-    const dest = undefined
-    const flags = ['zx']
-    const targetDir = await toolCache.extractTar(file, dest, flags)
+    const targetDir = await toolCache.extractTar(file)
     const target = 'elp'
     cachePath = await toolCache.cacheFile(file, target, toolName, elpVersion)
   } else {
-    core.debug(`ELP ${elpVersion} is cached`)
+    core.debug(`ELP ${elpVersion} is cached as a tool`)
   }
 
   const runnerToolPath = path.join(process.env.RUNNER_TEMP, '.setup-elp', 'elp')
-  fs.cpSync(cachePath, runnerToolPath, { recursive: true })
-  fs.chmodSync(path.join(runnerToolPath, 'elp'), 0o755)
+  await fs.cp(cachePath, runnerToolPath, { recursive: true })
+  await fs.chmod(path.join(runnerToolPath, 'elp'), 0o755)
   core.addPath(runnerToolPath)
 
   const cmd = 'elp'
   const args = ['version']
-  await exec_(cmd, args)
-  core.debug(`ELP installed version is ${1}`)
+  const version = await exec_(cmd, args)
+  core.debug(`ELP installed version is '${version}'`)
 }
 
 function assertArchsPlatforms() {
