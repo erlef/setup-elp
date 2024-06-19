@@ -46,9 +46,9 @@ async function installElp(elpVersion) {
 function assertArchsPlatforms() {
   const knownArchsPlatforms = [
     'arm64:darwin',
-    'amd64:darwin',
+    'x64:darwin',
     'arm64:linux',
-    'amd64:linux',
+    'x64:linux',
   ]
   const archPlatform = `${arch()}:${platform()}`
 
@@ -82,7 +82,7 @@ function platform() {
 function archToELPArch() {
   const elpArchs = {
     arm64: 'aarch64',
-    amd64: 'x86_64',
+    x64: 'x86_64',
   }
   const elpArch = elpArchs[arch()]
   core.debug(`ELP arch. is '${elpArch}'`)
