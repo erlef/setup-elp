@@ -1,0 +1,51 @@
+---
+name: CI
+
+"on":
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Development CI
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: echo "node_version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+        id: cat-nvmrc
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.cat-nvmrc.outputs.node_version}}
+
+      - run: npm run build-dist
+
+      - name: Check if build left artifacts
+        run: git diff --exit-code
+
+      - run: npm run test
+
+  action:
+    name: Action CI
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use paulo-ferraz-oliveira/gha-example
+        id: gha-example
+        uses: ./
+        with:
+          input-1: input-1
+
+      - name: Output input-1 (from output-1)
+        run: echo "${{ steps.gha-example.outputs.output-1 }}"
