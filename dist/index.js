@@ -28890,6 +28890,14 @@ module.exports = require("node:events");
 
 /***/ }),
 
+/***/ 3977:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs/promises");
+
+/***/ }),
+
 /***/ 4492:
 /***/ ((module) => {
 
@@ -30687,7 +30695,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186)
 const exec = __nccwpck_require__(1514)
 const toolCache = __nccwpck_require__(7784)
-const fs = __nccwpck_require__(7147)
+const fs = __nccwpck_require__(3977)
 const path = __nccwpck_require__(1017)
 
 async function main() {
@@ -30792,7 +30800,7 @@ function elpPlatformSuffix() {
 }
 
 async function otpMajorMinor() {
-  const cmd = `erl`
+  const cmd = 'erl'
   const args = [
     '-eval',
     `

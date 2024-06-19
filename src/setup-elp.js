@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const exec = require('@actions/exec')
 const toolCache = require('@actions/tool-cache')
-const fs = require('fs')
+const fs = require('node:fs/promises')
 const path = require('path')
 
 async function main() {
@@ -106,7 +106,7 @@ function elpPlatformSuffix() {
 }
 
 async function otpMajorMinor() {
-  const cmd = `erl`
+  const cmd = 'erl'
   const args = [
     '-eval',
     `
