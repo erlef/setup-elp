@@ -30720,7 +30720,9 @@ async function installElp(elpVersion) {
     const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
     core.debug(`ELP download URL is '${elpTarGz}'`)
     const file = await toolCache.downloadTool(elpTarGz)
-    const targetDir = await toolCache.extractTar(file)
+    const dest = undefined
+    const flags = ['zxf']
+    const targetDir = await toolCache.extractTar(file, dest, flags)
     const target = 'elp'
     cachePath = await toolCache.cacheFile(file, target, toolName, elpVersion)
   } else {
@@ -30729,7 +30731,6 @@ async function installElp(elpVersion) {
 
   const runnerToolPath = path.join(process.env.RUNNER_TEMP, '.setup-elp', 'elp')
   await fs.cp(cachePath, runnerToolPath, { recursive: true })
-  await fs.chmod(path.join(runnerToolPath, 'elp'), 0o755)
   core.addPath(runnerToolPath)
 
   const cmd = 'elp'
