@@ -1,6 +1,6 @@
 # Security policy
 
-Thanks for helping make `gha-example` safer for everyone.
+Thanks for helping make `setup-elp` safer for everyone.
 
 Find below updated information on our security policy.
 

@@ -1,6 +1,6 @@
 ---
-name: gha-example
-author: Paulo F. Oliveira
+name: setup-elp
+author: Erlang Ecosystem Foundation
 description: >
   An example GitHub Actions Node.js template.
   Takes an input, echoes it, outputs it.

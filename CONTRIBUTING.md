@@ -1,4 +1,4 @@
-# Contributing to `gha-example`
+# Contributing to `setup-elp`
 
 1. [License](#license)
 1. [Reporting a bug](#reporting-a-bug)
@@ -11,16 +11,16 @@
 
 ## License
 
-`gha-example` is licensed under the [MIT License](LICENSE.md), for all code.
+`setup-elp` is licensed under the [MIT License](LICENSE.md), for all code.
 
 ## Reporting a bug
 
-`gha-example` is not perfect software and will be buggy.
+`setup-elp` is not perfect software and will be buggy.
 
 Bugs can be reported via
-[GitHub issues: bug report](https://github.com/paulo-ferraz-oliveira/gha-example/issues/new?template=bug_report.md).
+[GitHub issues: bug report](https://github.com/paulo-ferraz-oliveira/setup-elp/issues/new?template=bug_report.md).
 
-Some contributors and maintainers may be unpaid developers working on `gha-example`, in their
+Some contributors and maintainers may be unpaid developers working on `setup-elp`, in their
 own time, with limited resources. We ask for respect and understanding, and will provide the same
 back.
 
@@ -31,17 +31,17 @@ is solved, but help prevent future regressions related to it.
 
 Before requesting or implementing a new feature, do the following:
 
-- search, in existing [issues](https://github.com/paulo-ferraz-oliveira/gha-example/issues)
+- search, in existing [issues](https://github.com/paulo-ferraz-oliveira/setup-elp/issues)
 (open or closed), whether the feature might already be in the works, or has already been rejected,
 - make sure you're using the latest software release (or even the latest code, if you're going for
 _bleeding edge_).
 
 If this is done, open up a
-[GitHub issues: feature request](https://github.com/paulo-ferraz-oliveira/gha-example/issues/new?template=feature_request.md).
+[GitHub issues: feature request](https://github.com/paulo-ferraz-oliveira/setup-elp/issues/new?template=feature_request.md).
 
 We may discuss details with you regarding the implementation, and its inclusion within the project.
 
-We try to have as many of `gha-example`'s features tested as possible. Everything that a user
+We try to have as many of `setup-elp`'s features tested as possible. Everything that a user
 can do, and is repeatable in any way, should be tested, to guarantee backwards compatible.
 
 ## Submitting your changes
@@ -73,7 +73,7 @@ as possible. This will also help eventual automated changelog generation.
 
 ### Pull requests and branching
 
-All fixes to `gha-example` end up requiring a +1 from one or more of the project's
+All fixes to `setup-elp` end up requiring a +1 from one or more of the project's
 maintainers.
 
 During the review process, you may be asked to correct or edit a few things before a final rebase
@@ -82,5 +82,5 @@ done by reviewers.
 
 ### Credits
 
-`gha-example` has been improved by
-[many contributors](https://github.com/paulo-ferraz-oliveira/gha-example/graphs/contributors)!
+`setup-elp` has been improved by
+[many contributors](https://github.com/paulo-ferraz-oliveira/setup-elp/graphs/contributors)!

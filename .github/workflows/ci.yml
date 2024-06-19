@@ -41,11 +41,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use paulo-ferraz-oliveira/gha-example
-        id: gha-example
+      - name: Use paulo-ferraz-oliveira/setup-elp
+        id: setup-elp
         uses: ./
         with:
           input-1: input-1
 
       - name: Output input-1 (from output-1)
-        run: echo "${{ steps.gha-example.outputs.output-1 }}"
+        run: echo "${{ steps.setup-elp.outputs.output-1 }}"
