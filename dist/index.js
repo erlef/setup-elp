@@ -30710,26 +30710,36 @@ main().catch((error) => {
 })
 
 async function installElp(elpVersion) {
+  // We to this because tool-cache only likes semver
+  elpVersionForCache = semverFromELPVersion(elpVersion)
+
   const toolName = 'elp'
-  let cachePath = toolCache.find(toolName, elpVersion)
+  let cachePath = toolCache.find(toolName, elpVersionForCache)
 
   if (cachePath === '') {
-    core.debug(`ELP ${elpVersion} is not cached as a tool`)
-    const elpTarGzFile0 = await elpTarGzFile()
-    const repo = 'https://github.com/WhatsApp/erlang-language-platform'
-    const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
-    core.debug(`ELP download URL is '${elpTarGz}'`)
-    const file = await toolCache.downloadTool(elpTarGz)
+    core.debug(`ELP ${elpVersion} (cache version: '${elpVersionForCache}') is not cached as a tool`)
+    const elpTarGzUrl = await elpTarGz(elpVersion)
+    const file = await toolCache.downloadTool(elpTarGzUrl)
     const targetDir = await toolCache.extractTar(file)
-    cachePath = await toolCache.cacheDir(targetDir, toolName, elpVersion)
+    cachePath = await toolCache.cacheDir(targetDir, toolName, elpVersionForCache)
   } else {
-    core.debug(`ELP ${elpVersion} is cached as a tool`)
+    core.debug(`ELP ${elpVersion} (cache version: '${elpVersionForCache}') is cached as a tool`)
   }
 
+  // We want a deterministic name per runner (helpful for self-hosted, for example)
   const runnerToolPath = path.join(process.env.RUNNER_TEMP, '.setup-elp', 'elp')
   await fs.cp(cachePath, runnerToolPath, { recursive: true })
   core.addPath(runnerToolPath)
 
+  reportInstalledELPVersion()
+}
+
+function semverFromELPVersion(elpVersion) {
+  let [major, minor, patch, build] = elpVersion.split(/[-_]/).slice(0, 4)
+  return `${Number(major)}.${Number(minor)}.${Number(patch)}+${Number(build) || 1}`
+}
+
+async function reportInstalledELPVersion() {
   const cmd = 'elp'
   const args = ['version']
   const version = await exec_(cmd, args)
@@ -30826,6 +30836,14 @@ async function elpTarGzFile() {
   const elpTarGzFile = `elp-${platform}-${arch}-${suffix}-otp-${otp}.tar.gz`
   core.debug(`ELP .tar.gz is '${elpTarGzFile}'`)
   return elpTarGzFile
+}
+
+async function elpTarGz(elpVersion) {
+  const elpTarGzFile0 = await elpTarGzFile()
+  const repo = 'https://github.com/WhatsApp/erlang-language-platform'
+  const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
+  core.debug(`ELP download URL is '${elpTarGz}'`)
+  return elpTarGz
 }
 
 async function exec_(cmd, args) {
