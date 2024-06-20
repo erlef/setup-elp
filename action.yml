@@ -5,12 +5,9 @@ description: >
   An example GitHub Actions Node.js template.
   Takes an input, echoes it, outputs it.
 inputs:
-  input-1:
-    description: Input 1
+  elp-version:
+    description: The ELP version to use
     required: true
-outputs:
-  output-1:
-    description: Output 1
 runs:
   using: node20
   main: dist/index.js
