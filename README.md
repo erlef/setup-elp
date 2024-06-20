@@ -31,9 +31,9 @@ The action supports the following architectures / platforms:
 | arch.   | platform
 |-        |-
 | `arm64` | `darwin` (GitHub `macos-...`)
-| `amd64` | `darwin`
+| `x64`   | `darwin`
 | `arm64` | `linux` (GitHub `ubuntu-...`)
-| `amd64` | `linux`
+| `x64`   | `linux`
 
 ## The project
 
