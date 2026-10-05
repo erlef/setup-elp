@@ -30700,7 +30700,7 @@ const path = __nccwpck_require__(1017)
 
 async function main() {
   prepareLocal()
-  const elpVersion = getRequiredInput('elp-version')
+  const elpVersion = getInput('elp-version', false) || 'latest'
   assertArchsPlatforms()
   await installElp(elpVersion)
 }
@@ -30757,10 +30757,6 @@ function assertArchsPlatforms() {
     )
   }
   core.debug(`<arch>:<platform> is '${archPlatform}'`)
-}
-
-function getRequiredInput(name) {
-  return getInput(name, true)
 }
 
 function getInput(name, required) {
@@ -30841,7 +30837,9 @@ async function elpTarGzFile() {
 async function elpTarGz(elpVersion) {
   const elpTarGzFile0 = await elpTarGzFile()
   const repo = 'https://github.com/WhatsApp/erlang-language-platform'
-  const elpTarGz = `${repo}/releases/download/${elpVersion}/${elpTarGzFile0}`
+  // GitHub serves the latest release's assets under releases/latest/download/
+  const release = elpVersion === 'latest' ? 'latest/download' : `download/${elpVersion}`
+  const elpTarGz = `${repo}/releases/${release}/${elpTarGzFile0}`
   core.debug(`ELP download URL is '${elpTarGz}'`)
   return elpTarGz
 }
