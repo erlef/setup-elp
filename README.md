@@ -22,7 +22,7 @@ The action supports the following inputs:
 
 | `with`        | Purpose
 |-              |-
-| `elp-version` | Choose the ELP version to use
+| `elp-version` | ELP version to use: a release tag (e.g. `2026-10-05`) or `latest` (default)
 
 #### Architectures / platforms
 
