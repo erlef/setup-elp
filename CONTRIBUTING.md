@@ -51,6 +51,9 @@ some other license files (as `.txt`).
 
 Before submitting your changes, run `npm run build-dist` and fix any issues arising from that.
 
+`npm run build-dist` lints YAML files with [yamllint](https://github.com/adrienverge/yamllint)
+(configured in `.yamllint.yml`), which needs to be in your `PATH` (e.g. `pipx install yamllint`).
+
 ### Running tests
 
 To run tests locally, run `npm run test`.
