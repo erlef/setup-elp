@@ -6,8 +6,9 @@ description: >
   Takes an input, echoes it, outputs it.
 inputs:
   elp-version:
-    description: The ELP version to use
-    required: true
+    description: The ELP version to use (a release tag, e.g. 2026-10-05, or latest)
+    required: false
+    default: latest
 runs:
   using: node20
   main: dist/index.js
