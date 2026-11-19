@@ -7,6 +7,7 @@
    1. [Code Style](#code-style)
    1. [Committing your changes](#committing-your-changes)
    1. [Pull requests and branching](#pull-requests-and-branching)
+   1. [Releasing](#releasing)
    1. [Credits](#credits)
 
 ## License
@@ -82,6 +83,19 @@ maintainers.
 During the review process, you may be asked to correct or edit a few things before a final rebase
 to merge things. Do send edits as individual commits to allow for gradual and partial reviews to be
 done by reviewers.
+
+### Releasing
+
+Releases follow [Semantic Versioning](https://semver.org/) and are cut from `main`, once the changes
+to release are merged. Users reference the action by its major version tag (e.g. `@v1`), which
+always points at the latest release with that major version:
+
+1. tag the release on `main`, e.g. `git tag -a v1.2.3 -m v1.2.3 && git push origin v1.2.3`
+1. create a [GitHub release](https://github.com/erlef/setup-elp/releases/new) from that tag, with
+the changes since the previous release as release notes, and publish it to the GitHub Marketplace
+1. move the major version tag to the release: `git tag -f v1 v1.2.3^{} && git push -f origin v1`
+
+Breaking changes (e.g. removing an input or changing its default) require a new major version.
 
 ### Credits
 
