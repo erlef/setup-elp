@@ -2,8 +2,7 @@
 name: setup-elp
 author: Erlang Ecosystem Foundation
 description: >
-  An example GitHub Actions Node.js template.
-  Takes an input, echoes it, outputs it.
+  Install ELP (Erlang Language Platform) to lint and type check Erlang code with eqWAlizer.
 inputs:
   elp-version:
     description: The ELP version to use (a release tag, e.g. 2026-10-05, or latest)
