@@ -34837,7 +34837,7 @@ main().catch((error) => {
 
 async function installElp(elpVersion) {
   // We to this because tool-cache only likes semver
-  elpVersionForCache = semverFromELPVersion(elpVersion)
+  const elpVersionForCache = semverFromELPVersion(elpVersion)
 
   const toolName = 'elp'
   let cachePath = toolCache.find(toolName, elpVersionForCache)
