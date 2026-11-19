@@ -22,12 +22,12 @@ jobs:
     name: Development CI
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - run: echo "node_version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
         id: cat-nvmrc
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ steps.cat-nvmrc.outputs.node_version}}
 
@@ -38,24 +38,55 @@ jobs:
 
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: '25.3'
+          otp-version: '28.5'
 
       - run: npm run test
 
   action:
-    name: Action CI
-    runs-on: ubuntu-24.04
+    name: Action CI (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: '25.3'
+          # An Erlang/OTP version ELP ships builds for (otp-<major>.<minor> assets)
+          otp-version: '28.5'
 
       - name: Use erlef/setup-elp
         id: setup-elp
         uses: ./
         with:
-          elp-version: '2024-06-07'
+          # Pinned, so that a new ELP release (e.g. one dropping this Erlang/OTP version) cannot
+          # break CI on its own
+          elp-version: '2026-11-19'
 
       - run: elp version
+
+      # A release asset stands in for an unreleased build; a version other than the ones above shows
+      # that the tarball replaced them
+      - name: Use erlef/setup-elp with an ELP tarball
+        if: runner.os == 'Linux'
+        uses: ./
+        with:
+          elp-tarball: "https://github.com/WhatsApp/erlang-language-platform/releases/download/\
+            2026-11-16/elp-linux-x86_64-unknown-linux-gnu-otp-28.5.tar.gz"
+
+      - if: runner.os == 'Linux'
+        run: elp version | grep -F 'build-2026-11-16'
+
+  # The required status check: a single, stable name, whatever the matrix above contains
+  action-ci:
+    name: Action CI
+    needs: action
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check that all Action CI jobs succeeded
+        env:
+          RESULT: ${{ needs.action.result }}
+        run: test "$RESULT" = success

@@ -1,4 +1,4 @@
-const elpVersion = '2024-06-07'
+const elpVersion = '2026-11-19'
 simulateInput('elp-version', elpVersion)
 
 function tests() {

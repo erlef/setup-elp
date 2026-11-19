@@ -11,10 +11,27 @@
 
 ### Usage
 
-See [action.yml](action.yml) for the action's specification.
+```yaml
+jobs:
+  elp:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: '28.5'
+      - uses: erlef/setup-elp@v1
+      - run: elp lint --no-connect
+      - run: elp eqwalize-all --no-connect --bail-on-error
+```
 
-In your CI pipelines, use it considering CLI `elp` is available as an executable, as specified
-in the Erlang Language Platform repository mentioned above.
+The action installs the ELP build for the Erlang/OTP version found on the `PATH` (`erl`, e.g.
+installed with [`setup-beam`](https://github.com/erlef/setup-beam)), so install Erlang/OTP first,
+with a `<major>.<minor>` version ELP ships builds for: see the assets of the
+[ELP releases](https://github.com/WhatsApp/erlang-language-platform/releases). Afterwards, `elp` is
+on the `PATH` for the rest of the job.
+
+See [action.yml](action.yml) for the action's specification.
 
 #### Inputs
 
@@ -23,6 +40,22 @@ The action supports the following inputs:
 | `with`        | Purpose
 |-              |-
 | `elp-version` | ELP version to use: a release tag (e.g. `2026-10-05`) or `latest` (default)
+| `elp-tarball` | Path or URL of an ELP `.tar.gz` to use instead of a release (unreleased builds)
+
+#### Annotations
+
+In GitHub Actions, ELP releases newer than `2026-11-19` print the findings of `elp lint` and
+`elp eqwalize-all` as GitHub [workflow commands][workflow-commands], with no extra arguments: they
+show up as annotations in the workflow run's summary and on the affected lines of the pull
+request's "Files changed" tab. With ELP `2026-11-19`, pass `--format github` to get the same.
+
+- `elp lint` then fails on any finding, warnings included: pass `--severity error` to report, and
+  fail on, errors only
+- pass `--format json` to get JSON lines instead of annotations
+- with a job matrix (e.g. several Erlang/OTP versions), run the ELP steps in one job only, or every
+  job reports the same annotations
+
+[workflow-commands]: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands
 
 #### Architectures / platforms
 
