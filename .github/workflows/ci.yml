@@ -22,12 +22,12 @@ jobs:
     name: Development CI
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - run: echo "node_version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
         id: cat-nvmrc
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ steps.cat-nvmrc.outputs.node_version}}
 
@@ -50,7 +50,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-15]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: erlef/setup-beam@v1
         with:
