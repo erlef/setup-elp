@@ -52,7 +52,7 @@ jobs:
         with:
           otp-version: '25.3'
 
-      - name: Use paulo-ferraz-oliveira/setup-elp
+      - name: Use erlef/setup-elp
         id: setup-elp
         uses: ./
         with:
