@@ -34857,7 +34857,7 @@ async function installElp(elpVersion) {
   await fs.cp(cachePath, runnerToolPath, { recursive: true })
   core.addPath(runnerToolPath)
 
-  reportInstalledELPVersion()
+  await reportInstalledELPVersion()
 }
 
 function semverFromELPVersion(elpVersion) {
