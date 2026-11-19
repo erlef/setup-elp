@@ -7,8 +7,13 @@ const path = require('path')
 async function main() {
   prepareLocal()
   const elpVersion = getInput('elp-version', false) || 'latest'
+  const elpTarball = getInput('elp-tarball', false)
   assertArchsPlatforms()
-  await installElp(elpVersion)
+  if (elpTarball) {
+    await installElpTarball(elpTarball)
+  } else {
+    await installElp(elpVersion)
+  }
 }
 
 main().catch((error) => {
@@ -32,9 +37,24 @@ async function installElp(elpVersion) {
     core.debug(`ELP ${elpVersion} (cache version: '${elpVersionForCache}') is cached as a tool`)
   }
 
+  await addToPath(cachePath)
+}
+
+// An ELP build that is not a release (e.g. built from a pull request), as a .tar.gz with the
+// `elp` binary at its root, like the release assets. It is not cached: its content can change
+// under the same name
+async function installElpTarball(elpTarball) {
+  core.debug(`Installing ELP from '${elpTarball}'`)
+  const isUrl = /^https?:\/\//.test(elpTarball)
+  const file = isUrl ? await toolCache.downloadTool(elpTarball) : elpTarball
+  const targetDir = await toolCache.extractTar(file)
+  await addToPath(targetDir)
+}
+
+async function addToPath(elpDir) {
   // We want a deterministic name per runner (helpful for self-hosted, for example)
   const runnerToolPath = path.join(process.env.RUNNER_TEMP, '.setup-elp', 'elp')
-  await fs.cp(cachePath, runnerToolPath, { recursive: true })
+  await fs.cp(elpDir, runnerToolPath, { recursive: true })
   core.addPath(runnerToolPath)
 
   await reportInstalledELPVersion()

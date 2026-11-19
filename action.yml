@@ -8,6 +8,11 @@ inputs:
     description: The ELP version to use (a release tag, e.g. 2026-10-05, or latest)
     required: false
     default: latest
+  elp-tarball:
+    description: >-
+      Path or URL of an ELP .tar.gz to install instead of a release (e.g. a build of an
+      unreleased change); takes precedence over elp-version
+    required: false
 runs:
   using: node24
   main: dist/index.js

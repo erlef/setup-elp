@@ -23,6 +23,7 @@ The action supports the following inputs:
 | `with`        | Purpose
 |-              |-
 | `elp-version` | ELP version to use: a release tag (e.g. `2026-10-05`) or `latest` (default)
+| `elp-tarball` | Path or URL of an ELP `.tar.gz` to use instead of a release (unreleased builds)
 
 #### Architectures / platforms
 
